@@ -13,7 +13,8 @@ class Knight(threading.Thread):
         self.days_passed = 0
 
     def run(self):
-        global ENEMIES_COUNT
+        global ENEMIES_COUNT, days_word
+
         print(f"{self.name}, на нас напали!")
 
         while ENEMIES_COUNT > 0:
@@ -28,13 +29,13 @@ class Knight(threading.Thread):
 
             # Обновляем счетчик дней
             self.days_passed += 1
-
+            days_word = 'день' if self.days_passed % 10 == 1 and self.days_passed != 11 else (
+                'дня' if self.days_passed % 10 in range(2, 5) and self.days_passed not in range(11, 16)
+                else 'дней')
             # Сообщаем о ходе битвы
-            print(f"{self.name} сражается {self.days_passed}... Осталось {ENEMIES_COUNT} воинов.")
+            print(f"{self.name} сражается {self.days_passed} {days_word} Осталось {ENEMIES_COUNT} воинов.")
 
         # Победная фраза после завершения битвы
-        days_word = 'день' if self.days_passed == 1 else (
-            'дней' if self.days_passed % 10 != 1 or self.days_passed > 20 else 'дня')
         print(f"{self.name} одержал победу спустя {self.days_passed} {days_word}!")
 
 
@@ -53,7 +54,6 @@ if __name__ == "__main__":
 
     # Сообщение об окончании битв
     print("Битвы окончены!")
-
 
 # Создание класса
 
